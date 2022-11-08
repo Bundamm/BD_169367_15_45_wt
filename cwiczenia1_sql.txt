@@ -1,0 +1,11 @@
+// ZADANIE 1
+CREATE TABLE postac(id_postaci int PRIMARY KEY AUTO_INCREMENT, nazwa varchar(40), rodzaj enum('wiking','ptak','kobieta'), data_ur date, wiek int CHECK (wiek >= 0));
+
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES ('Bjorn', 'wiking', '1997-10-25', 25), ('Drozd', 'ptak', '1997-10-26', 25), ('Tesciowa', 'kobieta', '1980-10-26', 42);
+UPDATE postac SET wiek = 88 WHERE id_postaci = 3;
+SELECT*FROM postac;
+
+// ZADANIE 2
+CREATE TABLE walizka(id_walizki int PRIMARY KEY AUTO_INCREMENT, pojemnosc float, kolor enum('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela int, FOREIGN KEY(id_wlasciciela) REFERENCES szewat.postac(id_postaci) ON DELETE CASCADE);
+ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
+INSERT INTO (pojemnosc, kolor, id_wlasciciela) VALUES (40, 'czerwony', 1), (45, 'teczowy', 3);
