@@ -1,0 +1,40 @@
+//ZAD 1
+
+DELETE FROM postac WHERE wiek='42';
+DELETE FROM postac WHERE wiek='32';
+
+
+
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABLE postac MODIFY id_postaci INT;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+//ZAD 2
+
+ALTER TABLE postac ADD pesel CHAR(11) NOT NULL FIRST;
+UPDATE postac SET pesel='12846127824' where id_postaci='1';
+UPDATE postac SET pesel='12846127825' where id_postaci='2';
+UPDATE postac SET pesel='12846127828' where id_postaci='3';
+UPDATE postac SET pesel='12846127810' where id_postaci='5';
+UPDATE postac SET pesel='12846127835' where id_postaci='6';
+UPDATE postac SET pesel='12846127833' where id_postaci='8';
+ALTER TABLE postac ADD PRIMARY KEY(pesel);
+
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena');
+INSERT INTO postac (pesel, id_postaci, nazwa, rodzaj, data_ur, wiek) VALUES ('70040939985','9','Gertruda Nieszczera', 'syrena', '1988-10-02', '34');
+
+//ZAD 3
+
+UPDATE postac SET nazwa_statku='kraken' where nazwa regexp 'a';
+UPDATE postac SET nazwa_statku='kraken' where nazwa regexp 'a' AND rodzaj != 'kobieta';
+UPDATE postac SET nazwa_statku='kraken' where nazwa LIKE 'a';
+
+UPDATE statek SET max_ladownosc = max_ladownosc * 0.7 where data_wodowania >= '1901-01-01' AND data_wodowania <='2000-12-31';
+
+
+
+
+
+
