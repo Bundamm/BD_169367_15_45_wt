@@ -9,3 +9,55 @@ SELECT*FROM postac;
 CREATE TABLE walizka(id_walizki int PRIMARY KEY AUTO_INCREMENT, pojemnosc float, kolor enum('rozowy', 'czerwony', 'teczowy', 'zolty'), id_wlasciciela int, FOREIGN KEY(id_wlasciciela) REFERENCES szewat.postac(id_postaci) ON DELETE CASCADE);
 ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
 INSERT INTO (pojemnosc, kolor, id_wlasciciela) VALUES (40, 'czerwony', 1), (45, 'teczowy', 3);
+
+// ZADANIE 3
+
+CREATE TABLE izba(adres_budynku VARCHAR(30), nazwa_izby VARCHAR(20), metraz float, wlasciciel INT,
+PRIMARY KEY(adres_budynku, nazwa_izby), FOREIGN KEY(wlasciciel) REFERENCES szewat.postac(id_postaci) ON DELETE SET NULL);
+
+ALTER TABLE izba ADD kolor VARCHAR(20) AFTER metraz;
+ALTER TABLE izba ALTER kolor SET DEFAULT 'czarny';
+
+INSERT INTO izba (adres_budynku, nazwa_izby, metraz, kolor, wlasciciel) VALUES ("Wikingska 8", 
+'spizarnia', 120, 'czarny', 1);
+
+// ZADANIE 4
+
+CREATE TABLE przetwory (id_przetworu INT PRIMARY KEY, rok_produkcji INT(4) CHECK (rok_produkcji >1) DEFAULT 1654, id_wykonawcy int, zawartosc char(20), dodatek char(25) DEFAULT 'papryczka_chilli', id_konsumenta INT, FOREIGN KEY (id_wykonawcy) REFERENCES szewat.postac(id_postaci), FOREIGN KEY (id_konsumenta) REFERENCES szewat.postac(id_postaci));
+
+INSERT INTO przetwory (id_przetworu, zawartosc, dodatek, id_wykonawcy, id_konsumenta) VALUES (1, 'bigos', 'papryczka_chilli', 1, 3);
+
+// ZADANIE 5
+
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES („Bombo”, ‚wiking’, ‚1997-10-25’‚ 25);
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES („Thor”, ‚wiking’, ‚1995-10-25’‚ 27);
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES („Rombo”, ‚wiking’, ‚1990-10-25’‚ 32);
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES („Igorrr”, ‚wiking’, ‚2002-10-25’‚ 20);
+INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES („Squarepusher”, ‚wiking’, ‚1980-10-25’‚ 42);
+
+CREATE TABLE statek  ( nazwa_statku VARCHAR(30) NOT NULL PRIMARY KEY,
+    -> rodzaj_statku ENUM('Langskip', 'Drakkar', 'Knara', 'Sneka'),
+    -> data_wodowania DATE,
+    -> max_ladownosc INT UNSIGNED);
+
+INSERT INTO statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc) VALUES ('kraken','Langskip','1899-08-08',30),('Odyn', 'Drakkar', '1789-05-06', 20);
+
+ALTER TABLE postac ADD funkcja CHAR(20);
+
+UPDATE postac SET funkcja = 'kapitan' WHERE id_postaci=1;
+
+ALTER TABLE postac ADD nazwa_statku VARCHAR(25);
+
+ALTER TABLE postac ADD FOREIGN KEY (nazwa_statku) REFERENCES statek(nazwa_statku);
+
+UPDATE postac SET nazwa_statku = 'kraken' WHERE id_postaci = 1;
+UPDATE postac SET nazwa_statku = 'kraken' WHERE id_postaci = 2;
+UPDATE postac SET nazwa_statku = ‚Odyn’ WHERE id_postaci = 4;
+UPDATE postac SET nazwa_statku = 'kraken' WHERE id_postaci = 5;
+UPDATE postac SET nazwa_statku = 'kraken' WHERE id_postaci = 6;
+UPDATE postac SET nazwa_statku = 'kraken' WHERE id_postaci = 7;
+UPDATE postac SET nazwa_statku = 'Odyn' WHERE id_postaci = 8;
+UPDATE postac SET nazwa_statku = 'Odyn' WHERE id_postaci = 9;
+
+DELETE FROM izba where nazwa_izby = 'spizarnia';
+DROP TABLE izba;
