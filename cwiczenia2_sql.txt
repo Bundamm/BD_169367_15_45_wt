@@ -44,7 +44,7 @@ INSERT INTO postac (pesel,id_postaci,nazwa,rodzaj,data_ur,wiek)
     
 CREATE TABLE Marynarz SELECT*FROM postac WHERE nazwa_statku IS NOT NULL;
 ALTER TABLE Marynarz ADD PRIMARY KEY(pesel);
-ALTER TABLE Marynarz ADD FOREIGN KEY (nazwa_statku) REFERENCES statek(nazwa_statku);
+ALTER TABLE Marynarz ADD FOREIGN KEY (nazwa_statku) REFERENCES statek(nazwa_statku) ON UPDATE CASCADE;
 ALTER TABLE Marynarz ADD CHECK(wiek > 0 AND wiek <= 1000);
 
 //ZAD 5
