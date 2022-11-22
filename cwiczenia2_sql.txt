@@ -66,6 +66,7 @@ CREATE TABLE zwierz ( id INT PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(20), wiek
 INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='ptak';
 INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='waz';
 
+INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='ptak' OR rodzaj='waz';
 
 
 
