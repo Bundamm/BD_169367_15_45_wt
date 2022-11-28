@@ -3,8 +3,6 @@
 DELETE FROM postac WHERE wiek='42';
 DELETE FROM postac WHERE wiek='32';
 
-
-
 ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
 ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
 ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
@@ -62,7 +60,6 @@ DROP TABLE statek;
 
 CREATE TABLE zwierz ( id INT PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(20), wiek INT);
     
-
 INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='ptak';
 INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='waz';
 
