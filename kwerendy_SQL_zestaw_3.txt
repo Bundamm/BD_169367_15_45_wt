@@ -1,5 +1,4 @@
 //ZAD 1
-
 CREATE TABLE szewat.kreatura AS SELECT*FROM wikingowie.kreatura;
 CREATE TABLE szewat.zasob AS SELECT*FROM wikingowie.zasob;
 CREATE TABLE szewat.ekwipunek AS SELECT*FROM wikingowie.ekwipunek;
