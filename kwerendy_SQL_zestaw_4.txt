@@ -1,0 +1,41 @@
+//ZAD 1
+
+SELECT AVG(waga) FROM kreatura WHERE rodzaj='wiking';
+
+SELECT rodzaj, COUNT(rodzaj) AS liczba_kreatur, AVG(waga) as srednia_waga FROM kreatura GROUP BY rodzaj;
+
+SELECT  ROUND(AVG(1700 - YEAR(dataUr)), 2) AS sredni_wiek  FROM kreatura;
+
+SELECT  ROUND(AVG(YEAR(CURDATE()) - YEAR(dataUr)), 2) AS sredni_wiek  FROM kreatura;
+
+//ZAD 2
+
+SELECT rodzaj, SUM(waga) AS suma_wag FROM zasob GROUP BY rodzaj;
+
+select nazwa, AVG(waga) AS srednia_waga, sum(ilosc), sum(waga) FROM zasob GROUP BY nazwa HAVING SUM(ilosc) >= 4 AND SUM(waga) > 10;
+
+SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING count(distinct(nazwa)) > 1;
+
+
+//ZAD 3
+SELECT kreatura.nazwa, ekwipunek.idZasobu AS ekwipunek, zasob.idZasobu  FROM kreatura LEFT JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu;
+
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu;
+SELECT kreatura.nazwa, ekwipunek.idZasobu AS ekwipunek, zasob.idZasobu, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipu
+nek.idZasobu;
+
+SELECT kreatura.idKreatury, kreatura.nazwa, ekwipunek.idZasobu FROM kreat
+ura LEFT JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury having idZ
+asobu is NULL;
+
+
+//ZAD 4
+SELECT kreatura.nazwa, YEAR(kreatura.dataUr) AS rokUr, zasob.idZasobu, zasob.nazwa from kreatura
+CROSS JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu HAVING rokUr > 1670 AND rokUr < 1680;
+
+SELECT kreatura.nazwa, zasob.idZasobu, zasob.rodzaj FROM kreatura  JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu HAVING rodzaj='jedzenie' ORDER BY kreatura.dataUr ASC  LIMIT 5;
+
+SELECT e.nazwa, m.nazwa, e.idKreatury, m.idKreatury FROM kreatura e INNER join kreatura m ON (e.idKreatury - m.idKreatury) = 5;
+
+//ZAD 5
+
