@@ -15,6 +15,7 @@ SELECT rodzaj, SUM(waga) AS suma_wag FROM zasob GROUP BY rodzaj;
 select nazwa, AVG(waga) AS srednia_waga, sum(ilosc), sum(waga) FROM zasob GROUP BY nazwa HAVING SUM(ilosc) >= 4 AND SUM(waga) > 10;
 
 SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING count(distinct(nazwa)) > 1;
+SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING count(ilosc) > 1;
 
 
 //ZAD 3
