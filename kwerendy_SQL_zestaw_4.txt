@@ -14,20 +14,18 @@ SELECT rodzaj, SUM(waga) AS suma_wag FROM zasob GROUP BY rodzaj;
 
 select nazwa, AVG(waga) AS srednia_waga, sum(ilosc), sum(waga) FROM zasob GROUP BY nazwa HAVING SUM(ilosc) >= 4 AND SUM(waga) > 10;
 
-SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING count(distinct(nazwa)) > 1;
-SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING count(ilosc) > 1;
+SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING min(ilosc) > 1;
 
 
 //ZAD 3
-SELECT kreatura.nazwa, ekwipunek.idZasobu AS ekwipunek, zasob.idZasobu  FROM kreatura LEFT JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu;
+SELECT kreatura.nazwa, zasob.idZasobu, sum(ekwipunek.ilosc) as calkowita_ilosc, ekwipunek.idEkwipunku FROM  kreatura LEFT JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu group by kreatura.nazwa;
+
 
 SELECT kreatura.nazwa, zasob.nazwa FROM kreatura JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu;
-SELECT kreatura.nazwa, ekwipunek.idZasobu AS ekwipunek, zasob.idZasobu, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipu
-nek.idZasobu;
 
-SELECT kreatura.idKreatury, kreatura.nazwa, ekwipunek.idZasobu FROM kreat
-ura LEFT JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury having idZ
-asobu is NULL;
+SELECT kreatura.nazwa, ekwipunek.idZasobu AS ekwipunek, zasob.idZasobu, zasob.nazwa FROM kreatura INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu;
+
+SELECT kreatura.idKreatury, kreatura.nazwa, ekwipunek.idZasobu FROM kreatura LEFT JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury having idZasobu is NULL;
 
 
 //ZAD 4
@@ -36,8 +34,10 @@ CROSS JOIN ekwipunek ON kreatura.idKreatury = ekwipunek.idKreatury JOIN zasob ON
 
 SELECT kreatura.nazwa, zasob.idZasobu, zasob.rodzaj FROM kreatura  JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury LEFT JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu HAVING rodzaj='jedzenie' ORDER BY kreatura.dataUr ASC  LIMIT 5;
 
-SELECT e.nazwa, m.nazwa, e.idKreatury, m.idKreatury FROM kreatura e INNER join kreatura m ON (e.idKreatury - m.idKreatury) = 5;
+SELECT CONCAT(e.nazwa, ' - ', m.nazwa) AS 'nazwa-nazwa', e.idKreatury, m.idKreatury FROM kreatura e INNER join kreatura m ON (e.idKreatury - m.idKreatury) = 5;
 
 //ZAD 5
-SELECT kreatura.rodzaj, zasob.nazwa, AVG(zasob.waga)  FROM kreatura JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu GROUP BY kreatura.rodzaj HAVING kreatura.rodzaj != 'waz' AND kreatura.rodzaj != 'malpa' AND SUM(zasob.ilosc) < 30;
+SELECT kreatura.rodzaj, ROUND(AVG(zasob.waga),2)  FROM kreatura  JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu WHERE (kreatura.rodzaj != 'waz' AND kreatura.rodzaj != 'malpa') GROUP BY kreatura.rodzaj HAVING  SUM(ekwipunek.ilosc) < 30;
+
+SELECT e.nazwa, e.rodzaj, e.dataUr FROM kreatura e, (SELECT MIN(dataUr) AS min, MAX(dataUr) AS max FROM kreatura GROUP BY rodzaj) e2 WHERE dataUr=min OR dataUr=max;
 
