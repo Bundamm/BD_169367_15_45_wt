@@ -6,3 +6,49 @@ CREATE TABLE szewat.wyprawa AS SELECT*FROM wikingowie.wyprawa;
 CREATE TABLE szewat.wyprawa AS SELECT*FROM wikingowie.wyprawa;
 
 SELECT nazwa FROM kreatura LEFT JOIN uczestnicy on kreatura.idKreatury=uczestnicy.id_uczestnika WHERE uczestnicy.id_uczestnika IS NULL GROUP BY nazwa;
+
+SELECT wyprawa.nazwa, SUM(ekwipunek.ilosc) FROM wyprawa INNER JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy INNER JOIN ekwipunek ON ekwipunek.idKreatury=uczestnicy.id_uczestnika GROUP BY wyprawa.nazwa;
+
+//ZAD 2
+SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika), GROUP_CONCAT(kreatura.nazwa SEPARATOR ', ') AS imiona_uczestnikow FROM wyprawa LEFT JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy LEFT JOI
+N kreatura ON kreatura.idKreatury=uczestnicy.id_uczestnika GROUP BY wyprawa.nazwa;
+
+SELECT ew.kolejnosc, s.nazwa, k.nazwa 
+FROM wyprawa w INNER JOIN etapy_wyprawy ew ON w.id_wyprawy=ew.idWyprawy
+INNER JOIN sektor s ON s.id_sektora=ew.sektor
+INNER JOIN kreatura k ON k.idKreatury=w.kierownik 
+ORDER BY ew.kolejnosc ASC, w.data_rozpoczecia ASC;
+
+//ZAD 3
+SELECT IFNULL(COUNT(ew.sektor), 0) as ile_razy, s.nazwa as nazwa FROM sektor s
+LEFT JOIN etapy_wyprawy ew ON ew.sektor=s.id_sektora GROUP BY s.id_sektora;
+
+SELECT k.nazwa, CASE WHEN COUNT(u.id_uczestnika) > 0
+THEN 'bral udzial w wyprawie' 
+ELSE 'nie bral udzialu w wyprawie' 
+END as czy_bral_udzial 
+FROM kreatura k 
+LEFT JOIN uczestnicy u ON u.id_uczestnika=k.idKreatury 
+GROUP BY k.nazwa;
+
+//ZAD 4
+SELECT w.nazwa, SUM(LENGTH(ew.dziennik)) AS suma_znakow
+FROM wyprawa w JOIN etapy_wyprawy ew ON w.id_wyprawy=ew.idWyprawy
+GROUP BY w.nazwa HAVING suma_znakow < 400;
+
+SELECT w.nazwa, SUM(z.waga*e.ilosc)/COUNT(u.id_uczestnika) AS sr_waga FROM 
+wyprawa w INNER JOIN uczestnicy u ON w.id_wyprawy=u.id_wyprawy
+INNER JOIN kreatura k ON u.id_uczestnika=k.idKreatury 
+INNER JOIN ekwipunek e ON e.idKreatury=k.idKreatury 
+INNER JOIN zasob z ON z.idZasobu=e.idZasobu GROUP BY w.nazwa;
+
+//ZAD 5
+SELECT k.nazwa, DATEDIFF(w.data_rozpoczecia, k.dataUr) as wiek_w_dniach, w.nazwa 
+FROM etapy_wyprawy ew INNER JOIN sektor s ON ew.sektor=s.id_sektora
+INNER JOIN wyprawa w ON w.id_wyprawy=ew.idWyprawy 
+INNER JOIN uczestnicy u ON w.id_wyprawy=u.id_wyprawy
+INNER JOIN kreatura k ON k.idKreatury=u.id_uczestnika
+WHERE s.nazwa='Chatka dziadka'
+GROUP BY k.nazwa;
+
+
