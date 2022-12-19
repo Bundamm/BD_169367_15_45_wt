@@ -18,7 +18,9 @@ SELECT rodzaj, count(distinct(nazwa)) FROM zasob GROUP BY rodzaj HAVING min(ilos
 
 
 //ZAD 3
-SELECT kreatura.nazwa, zasob.idZasobu, sum(ekwipunek.ilosc) as calkowita_ilosc, ekwipunek.idEkwipunku FROM  kreatura LEFT JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu group by kreatura.nazwa;
+SELECT kreatura.nazwa, zasob.idZasobu, sum(ekwipunek.ilosc) as calkowita_ilosc, ekwipunek.idEkwipunku FROM kreatura 
+LEFT JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury 
+JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu group by kreatura.nazwa;
 
 
 SELECT kreatura.nazwa, zasob.nazwa FROM kreatura 
