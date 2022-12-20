@@ -56,7 +56,7 @@ FROM kreatura k
 JOIN ekwipunek e ON e.idKreatury=k.idKreatury 
 JOIN zasob z ON z.idZasobu=e.idZasobu 
 WHERE (k.rodzaj != 'waz' AND k.rodzaj != 'malpa') 
-GROUP BY k.rodzaj HAVING SUM(e.ilosc) < 30;
+GROUP BY k.rodzaj HAVING suma_ilosc < 30;
 
 SELECT e.nazwa, e.rodzaj, e.dataUr FROM kreatura e, 
 (SELECT MIN(dataUr) AS min, MAX(dataUr) AS max FROM kreatura GROUP BY rodzaj) e2 
