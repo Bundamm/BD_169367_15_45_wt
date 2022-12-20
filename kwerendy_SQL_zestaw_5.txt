@@ -32,7 +32,7 @@ LEFT JOIN uczestnicy u ON u.id_uczestnika=k.idKreatury
 GROUP BY k.nazwa;
 
 //ZAD 4
-SELECT w.nazwa, SUM(LENGTH(ew.dziennik)) AS suma_znakow
+SELECT w.nazwa, SUM(CHAR_LENGTH(ew.dziennik)) AS suma_znakow
 FROM wyprawa w JOIN etapy_wyprawy ew ON w.id_wyprawy=ew.idWyprawy
 GROUP BY w.nazwa HAVING suma_znakow < 400;
 
