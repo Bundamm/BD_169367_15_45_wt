@@ -51,7 +51,7 @@ JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury
 JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu WHERE (kreatura.rodzaj != 'waz' AND kreatura.rodzaj != 'malpa') 
 GROUP BY kreatura.rodzaj HAVING  SUM(ekwipunek.ilosc) < 30;
 
-SELECT k.rodzaj, ROUND(AVG(z.waga)) AS sr_waga, SUM(e.ilosc) AS suma_ilosc 
+SELECT k.rodzaj, ROUND(AVG(z.waga), 2) AS sr_waga, SUM(e.ilosc) AS suma_ilosc 
 FROM kreatura k 
 JOIN ekwipunek e ON e.idKreatury=k.idKreatury 
 JOIN zasob z ON z.idZasobu=e.idZasobu 
