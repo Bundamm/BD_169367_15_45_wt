@@ -42,7 +42,8 @@ YEAR(k.dataUr) < 1680  ORDER BY k.nazwa ASC;
 SELECT k.nazwa, k.dataUr, z.rodzaj FROM kreatura k INNER JOIN ekwipunek e ON
 k.idKreatury=e.idKreatury INNER JOIN zasob z ON z.idZasobu=e.idZasobu HAVING z.rodzaj='jedzenie' ORDER BY k.dataUr ASC LIMIT 5;
 
-SELECT CONCAT(e.nazwa, ' - ', m.nazwa) AS 'nazwa-nazwa', e.idKreatury, m.idKreatury FROM kreatura e INNER join kreatura m ON (e.idKreatury - m.idKreatury) = 5;
+SELECT CONCAT(e.nazwa, ' - ', m.nazwa) AS 'nazwa-nazwa', e.idKreatury, m.idKreatury FROM kreatura
+e INNER join kreatura m ON (e.idKreatury - m.idKreatury) = 5;
 
 //ZAD 5
 SELECT kreatura.rodzaj, ROUND(AVG(zasob.waga),2)  FROM kreatura  
