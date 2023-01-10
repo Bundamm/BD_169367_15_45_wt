@@ -33,6 +33,15 @@ END $
 PROCEDURĘ CALLUJESZ FUNKCJĘ SELEKTUJESZ 
 //ZAD 4
 
+CREATE TRIGGER zad4 BEFORE INSERT ON wyprawa 
+FOR EACH ROW 
+BEGIN 
+IF (IFNULL((SELECT id_uczestnika FROM uczestnicy WHERE id_uczestnika = 14 AND id_wyprawy=new.id_wyprawy LIMIT 1), 0) 
+AND IFNULL((SELECT sektor FROM etapy_wyprawy WHERE idWyprawy=new.id_wyprawy AND sektor=7), 0)) 
+THEN INSERT INTO system_alarmowy VALUES (NULL, 'Tesciowa nadchodzi !!!');
+END IF; 
+END $
+
 
 
 // ZAD 5
@@ -43,4 +52,13 @@ SELECT SUM(udzwig) INTO suma FROM kreatura;
 SELECT MAX(udzwig) INTO maks FROM kreatura;
 END $
 
+CREATE PROCEDURE GetSectors(IN tripId INT)
+BEGIN
+    SELECT s.nazwa, s.id_sektora, CONCAT(s.wspolrzedna_x, s.wspolrzedna_y) FROM sektor s
+    JOIN etapy_wyprawy e ON s.id_sektora = e.sektor
+    JOIN wyprawa w ON w.id_wyprawy = e.idWyprawy
+    WHERE w.id_wyprawy = tripId
+    ORDER BY w.id_wyprawy;
+END $
+DELIMITER ;
 
