@@ -1,0 +1,168 @@
+TYPY DANYCH: CHAR, VARCHAR, INT, INT UNSIGNED(nieujemny), FLOAT, DATE, YEAR
+
+FUNKCJE: GETDATE(), MONTH(), YEAR(), DATE(), COUNT(), SUM(), AVG(), ROUND(wartosc, 2(do dwóch miejsc po przecinku)), MIN(), MAX(), CONCAT(pierwszy, ' oddzielacz ', drugi), GROUP_CONCAT(p.nazwa SEPARATOR ', ')( <- będzie wymieniać wszystko po przecinku.), IFNULL(wartosc_sprawdzana, coś_co_daje_jak_jest_null), CHAR_LENGTH(cos) <- daje długość wszystkich znaków w ciągu, DATEDIFF(pierwsza, druga) <- różnica dat
+
+
+Opis tabeli:
+ DESC nazwa;
+
+
+SHOW SELECT*FROM żeby sprawdzić z czego dokładnie składa się tabela;
+
+Sprawdź jakie tabele są w bazie:
+SHOW TABLES;
+
+Tworzenie tabeli:
+CREATE TABLE nazwa(tutaj nazwy kolumn wraz z ich typami i własnościami np wiek int CHECK (wiek >= 0)); albo person_id int FOREIGN KEY REFERENCES tabela(nazwa_kolumny); PAMIĘTAJ O PRIMARY KEY I FOREIGN KEY
+
+Tworzenie tabeli na podstawie innej:
+CREATE TABLE szewat.kreatura2 AS (SELECT * FROM szewat.kreatura); 
+Albo branie z innej bazy: CREATE TABLE szewat.nazwa_tabeli AS SELECT*FROM wikingowie.nazwa_tabeli;
+
+Tworzenie tabeli na podstawie innej ale tylko jej struktury:
+CREATE TABKE szewat.kreatura2 LIKE szewat.kreatura;
+
+Jak nie chcesz żeby wartość była 0 -> nazwa int NOT NULL;
+
+Wrzucanie wartości do tabeli:
+INSERT INTO nazwa (tu po przecinku na jakie kolumny chcemy insertować) VALUES (każdy nawias to wartości dla określonego wiersza), ()...
+
+Modyfikowanie tabeli:
+ALTER TABLE nazwa ADD <- dodaje nową kolumnę pamiętaj dodać typ na końcu np ALTER TABLE nazwa ADD kolumna int; albo na przykład CONSTRAINT, CHECK, FOREIGN KEY 
+
+ALTER TABLE nazwa DROP <- COLUMN/RESTRAINT/FOREIGN KEY/CHECK nazwa chocku to np Marynarz_chk_1
+
+ALTER TABLE nazwa MODIFY COLUMN <- pozwala zmienić data type w kolumnie; tutaj możesz dodać NOT NULL
+
+ALTER TABLE nazwa SET DEFAULT <- ustawianie domyślnej wartości; (jak dajemy default w CREATE TABLE to bez słowa set po prostu DEFAULT 'wartość';
+
+ALTER TABLE nazwa RENAME COLUMN stara_nazwa to nowa_nazwa;
+
+KLUCZ GŁÓWNY I KLUCZ OBCY:
+
+Klucz główny możesz dodać poprzez albo danie go w CREATE TABLE albo ALTER TABLE np.
+ALTER TABLE nazwa ADD PRIMARY KEY(np id); tutaj też możesz na końcu dać kiedy FIRST, LAST itd
+
+Usuwa się go zaś alterem:
+ALTER TABLE nazwa DROP PRIMARY KEY; albo ALTER TABLE nazwa DROP CONSTRAINT PK_nazwa;
+
+Należy pamiętać że jak chcemy dropnąć primary key, należy najpierw pozbyć się kluczy obcych do których nawiązuje
+
+Klucz obcy też dodaje się w podobny sposób:
+ALTER TABLE nazwa ADD FOREIGN KEY (bruh) REFERENCES kreatura(idKreatury);
+
+Tak samo się go usuwa tylko dajemy jego nazwę którą mamy w SHOW CREATE TABLE:
+ALTER TABLE nazwa DROP FOREIGN KEY nazwa_klucza(zazwyczaj: fk_nazwatabeli_1);
+
+Dodawanie wartości tabeli:
+
+UPDATE TABLE nazwa SET wartość(np. kot="bury") WHERE na którym wierszu np. (id_kota = "1") 
+Nie da się tutaj dać having ale możesz wepchnąć na miejscu WHERE, FROM i zrobić normalnego joina w nawiasie 
+
+PAMIĘTAJ ŻE MOŻESZ ZROBIĆ COŚ TAKIEGO:
+UPATE nazwa SET rodzaj='wiking' WHERE id_postaci IN (1,2,3,4,5); IN pozwala wybrać wiele miejsc w jednej linijce;
+
+Zmiana wartości po nazwie:
+Albo:
+UPDATE nazwa_tabeli SET nazwa='bruh' WHERE nazwa LIKE 'a'; <- czy zwiera a, można to też zapisać '%a' jak ma się kończyć na a, bądź 'a%' jak ma się zaczynać od a.
+Albo:
+UPDATE nazwa_tabeli SET nazwa='bruh' WHERE nazwa REGEXP 'a' AND rodzaj != 'wiking; użyłem tu regexa i dałem dodatkowy warunek czasami przy wielu trzeba dać nawiasy żeby oba ładnie działały np (wiek > 0 AND wiek <= 1000);
+
+
+Usuwanie wartości:
+DELETE FROM nazwa WHERE id='1';
+
+SELECT:
+Jak dajemy ten przykładowy wiek to możemy zamiast tego dać BETWEEN wartosc1 AND wartość2;
+ZAMIAST wartość != 0 dawaj IS NOT NULL albo jak ma być 0 dawaj IS NULL
+
+KOLEJNOŚĆ DZIAŁAŃ W SELECT BARDZO WAŻNE!!!!!!!!!:
+
+SELECT -> FROM -> WHERE -> GROUP BY -> HAVING -> ORDER BY -> LIMIT 
+
+W SELECT możesz dawać na przykład waga*0.7 AS 'netto' i wspomnieć do joinów z jakiej tabeli pochodzą:
+kreatura.idKreatury albo od razu dać alias k.idKreatury
+i tym podobne przed FROM 
+
+SELECT DISTINCT zmienia wszystkie powtarzające się nazwy w jedną i jak damy count i group by to możemy zliczyć ile ich jest
+
+
+ORDER BY kolumna ASC/DESC Rosnące albo malejące; MOŻNA ICH ROBIC KILKA POD RZĄD np ORDER BY kolejność ASC, data ASC;
+
+HAVING dajemy po GROUP BY pozwala to sprawdzać wartości w których użyliśmy funkcji np.
+
+SELECT nazwa, AVG(waga) AS srednia_waga, sum(ilosc), sum(waga) FROM zasób GROUP BY nazwa
+HAVING SUM(ilosc) >= 4 AND SUM(waga) > 10;
+
+JOINY:
+1.INNER JOIN(aka JOIN), 2.LEFT JOIN, 3.RIGHT JOIN, FULL JOIN(?)
+
+1. INNER JOIN daje część wspólną dwóch tabel
+2. LEFT JOIN daje całą pierwszą tabelę wraz z częścią wspólną (jak chcemy bez części wspólnej to możemy dać WHERE nazwa2.klucz IS NULL).
+3. RIGHT JOIN daje całą drugą tabelę wraz z częścią wspólną (bez niej analogicznie)
+
+JOINY POTRAFIĄ BYĆ NAPRAWDĘ DŁUGIE TO NAJLEPIEJ ALIASOWAĆ:
+Aliasujemy pisząc skrótową nazwę po wspomnieniu tabeli
+
+SELECT p.nazwa, d.wiek FROM pierwsza p JOIN druga d ON p.id=d.id; 
+
+Jeszcze można aliasować i dawać nazwę roboczą pisząc AS jak tak zrobimy nawiązujemy potem do wartości po zaliasowanej nazwie np SUM(wynik) AS 'suma' na końcu przy GROUP BY piszemy suma nie SUM(wynik)
+
+TABELĘ MOŻNA POŁĄCZYĆ Z SAMĄ SOBĄ:
+
+SELECT CONCAT(e.nazwa, ' - ', m.nazwa) AS 'nazwa-nazwa', e.idKreatury, m.idKreatury FROM kreatura e 
+INNER JOIN kreatura m ON (e.idKreatury - m.idKreatury) = 5;
+
+SELECT Z CASE'EM (działa jak zwykły if):
+
+SELECT k.nazwa, CASE WHEN COUNT(u.id_uczestnika) > 0
+THEN 'bral udzial w wyprawie' 
+ELSE 'nie bral udzialu w wyprawie' 
+END as czy_bral_udzial 
+FROM kreatura k 
+LEFT JOIN uczestnicy u ON u.id_uczestnika=k.idKreatury
+GROUP BY k.nazwa;
+
+
+SELECT Z PODZAPYTANIEM:
+SELECT e.nazwa, e.rodzaj, e.dataUr FROM kreatura e, 
+(SELECT MIN(dataUr) AS min, MAX(dataUr) AS max FROM kreatura GROUP BY rodzaj) e2 
+WHERE dataUr=min OR dataUr=max; 
+
+PAMIĘTAJ, ŻE JAK ROBISZ PODZAPYTANIE MUSISZ JE ZALIASOWAĆ.
+
+PRZYKŁADOWE SELECTY:
+
+Daje średni wiek postaci w odwołaniu do aktualnego czasu.
+
+SELECT ROUND(AVG(YEAR(CURDATE()) - YEAR(dataUr)), 2) AS sredni_wiek FROM kreatura;
+
+
+Wypisuje nazwę wyprawy, sumę liczb znaków użytych przy pisaniu dziennika, jeśli liczba znaków nie jest mniejsza od 400.
+
+SELECT w.nazwa, SUM(CHAR_LENGTH(ew.dziennik)) AS suma_znakow
+FROM wyprawa w JOIN etapy_wyprawy ew ON w.id_wyprawy=ew.idWyprawy
+GROUP BY w.nazwa HAVING suma_znakow < 400;
+
+Średnia waga zasobów jakie były niesione przez uczestników wyprawy.
+
+SELECT w.nazwa, SUM(z.waga*e.ilosc)/COUNT(u.id_uczestnika) AS sr_waga FROM 
+wyprawa w INNER JOIN uczestnicy u ON w.id_wyprawy=u.id_wyprawy
+INNER JOIN kreatura k ON u.id_uczestnika=k.idKreatury 
+INNER JOIN ekwipunek e ON e.idKreatury=k.idKreatury 
+INNER JOIN zasob z ON z.idZasobu=e.idZasobu GROUP BY w.nazwa;
+
+Nazwa kreatury oraz ile miała dni(wiek w dniach) w momencie rozpoczęcia wyprawy dla wypraw, które przechodziły przez chatkę dziadka.
+
+SELECT k.nazwa, DATEDIFF(w.data_rozpoczecia, k.dataUr) as wiek_w_dniach, w.nazwa 
+FROM etapy_wyprawy ew INNER JOIN sektor s ON ew.sektor=s.id_sektora
+INNER JOIN wyprawa w ON w.id_wyprawy=ew.idWyprawy 
+INNER JOIN uczestnicy u ON w.id_wyprawy=u.id_wyprawy
+INNER JOIN kreatura k ON k.idKreatury=u.id_uczestnika
+WHERE s.nazwa='Chatka dziadka'
+GROUP BY k.nazwa;
+
+
+
+
+
