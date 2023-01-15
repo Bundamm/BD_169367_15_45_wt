@@ -7,7 +7,7 @@ Opis tabeli:
  DESC nazwa;
 
 
-SHOW SELECT*FROM żeby sprawdzić z czego dokładnie składa się tabela;
+SHOW CREATE TABLE żeby sprawdzić z czego dokładnie składa się tabela;
 
 Sprawdź jakie tabele są w bazie:
 SHOW TABLES;
