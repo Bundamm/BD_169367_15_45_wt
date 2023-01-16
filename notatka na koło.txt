@@ -13,7 +13,7 @@ Sprawdź jakie tabele są w bazie:
 SHOW TABLES;
 
 Tworzenie tabeli:
-CREATE TABLE nazwa(tutaj nazwy kolumn wraz z ich typami i własnościami np wiek int CHECK (wiek >= 0)); albo person_id int FOREIGN KEY REFERENCES tabela(nazwa_kolumny); PAMIĘTAJ O PRIMARY KEY I FOREIGN KEY
+CREATE TABLE nazwa(tutaj nazwy kolumn wraz z ich typami i własnościami np wiek int CHECK (wiek >= 0)); albo person_id int, FOREIGN KEY (person_id) REFERENCES tabela(nazwa_kolumny); PAMIĘTAJ O PRIMARY KEY I FOREIGN KEY
 
 Tworzenie tabeli na podstawie innej:
 CREATE TABLE szewat.kreatura2 AS (SELECT * FROM szewat.kreatura); 
