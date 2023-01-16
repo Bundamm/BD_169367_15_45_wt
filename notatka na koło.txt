@@ -37,6 +37,7 @@ ALTER TABLE nazwa MODIFY COLUMN <- pozwala zmienić data type w kolumnie; tutaj 
 ALTER TABLE nazwa SET DEFAULT <- ustawianie domyślnej wartości; (jak dajemy default w CREATE TABLE to bez słowa set po prostu DEFAULT 'wartość';
 
 ALTER TABLE nazwa RENAME COLUMN stara_nazwa to nowa_nazwa;
+ALTER TABLE table_name CHANGE old_column_name new_col_name Data Type;
 
 KLUCZ GŁÓWNY I KLUCZ OBCY:
 
