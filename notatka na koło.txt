@@ -1,6 +1,6 @@
 TYPY DANYCH: CHAR, VARCHAR, INT, INT UNSIGNED(nieujemny), FLOAT, DATE, YEAR
 
-FUNKCJE: CURDATE(), MONTH(), YEAR(), DATE(), COUNT(), SUM(), AVG(), ROUND(wartosc, 2(do dwóch miejsc po przecinku)), MIN(), MAX(), CONCAT(pierwszy, ' oddzielacz ', drugi), GROUP_CONCAT(p.nazwa SEPARATOR ', ')( <- będzie wymieniać wszystko po przecinku.), IFNULL(wartosc_sprawdzana, coś_co_daje_jak_jest_null), CHAR_LENGTH(cos) <- daje długość wszystkich znaków w ciągu, DATEDIFF(pierwsza, druga) <- różnica dat
+FUNKCJE: CURDATE(), MONTH(), YEAR(), DATE(), COUNT(), SUM(), AVG(), ROUND(wartosc, 2(do dwóch miejsc po przecinku)), MIN(), MAX(), CONCAT(pierwszy, ' oddzielacz ', drugi), GROUP_CONCAT(p.nazwa SEPARATOR ', ')( <- będzie wymieniać wszystko po przecinku.), IFNULL(wartosc_sprawdzana, coś_co_daje_jak_jest_null), CHAR_LENGTH(cos)=LENGTH(cos) <- daje długość wszystkich znaków w ciągu, DATEDIFF(pierwsza, druga) <- różnica dat
 
 
 Opis tabeli:
