@@ -1,4 +1,4 @@
-TYPY DANYCH: CHAR, VARCHAR, INT, INT UNSIGNED(nieujemny), FLOAT, DATE, YEAR, FLOAT(np 3 (liczby),np 1(poprzecinku)), ENUM()
+TYPY DANYCH: CHAR, VARCHAR, INT, INT UNSIGNED(nieujemny), FLOAT, DATE, YEAR, FLOAT(np 3 (liczby),np 1(poprzecinku)), ENUM("bruh", "bruhilda");
 
 FUNKCJE: CURDATE(), MONTH(), YEAR(), DATE(), COUNT(), SUM(), AVG(), ROUND(wartosc, 2(do dwóch miejsc po przecinku)), MIN(), MAX(), CONCAT(pierwszy, ' oddzielacz ', drugi), GROUP_CONCAT(p.nazwa SEPARATOR ', ')( <- będzie wymieniać wszystko po przecinku.), IFNULL(jeslibedzienull, jesliniebedzienulla), CHAR_LENGTH(cos)=LENGTH(cos) <- daje długość wszystkich znaków w ciągu, DATEDIFF(pierwsza, druga) <- różnica dat
 AUTO_INCREMENT.
