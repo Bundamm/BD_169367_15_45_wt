@@ -1,7 +1,7 @@
 TYPY DANYCH: CHAR, VARCHAR, INT, INT UNSIGNED(nieujemny), FLOAT, DATE, YEAR
 
-FUNKCJE: CURDATE(), MONTH(), YEAR(), DATE(), COUNT(), SUM(), AVG(), ROUND(wartosc, 2(do dwóch miejsc po przecinku)), MIN(), MAX(), CONCAT(pierwszy, ' oddzielacz ', drugi), GROUP_CONCAT(p.nazwa SEPARATOR ', ')( <- będzie wymieniać wszystko po przecinku.), IFNULL(wartosc_sprawdzana, coś_co_daje_jak_jest_null), CHAR_LENGTH(cos)=LENGTH(cos) <- daje długość wszystkich znaków w ciągu, DATEDIFF(pierwsza, druga) <- różnica dat
-
+FUNKCJE: CURDATE(), MONTH(), YEAR(), DATE(), COUNT(), SUM(), AVG(), ROUND(wartosc, 2(do dwóch miejsc po przecinku)), MIN(), MAX(), CONCAT(pierwszy, ' oddzielacz ', drugi), GROUP_CONCAT(p.nazwa SEPARATOR ', ')( <- będzie wymieniać wszystko po przecinku.), IFNULL(jeslibedzienull, jesliniebedzienulla), CHAR_LENGTH(cos)=LENGTH(cos) <- daje długość wszystkich znaków w ciągu, DATEDIFF(pierwsza, druga) <- różnica dat
+AUTO_INCREMENT.
 
 Opis tabeli:
  DESC nazwa;
@@ -20,7 +20,7 @@ CREATE TABLE szewat.kreatura2 AS (SELECT * FROM szewat.kreatura);
 Albo branie z innej bazy: CREATE TABLE szewat.nazwa_tabeli AS SELECT*FROM wikingowie.nazwa_tabeli;
 
 Tworzenie tabeli na podstawie innej ale tylko jej struktury:
-CREATE TABKE szewat.kreatura2 LIKE szewat.kreatura;
+CREATE TABLE szewat.kreatura2 LIKE szewat.kreatura;
 
 Jak nie chcesz żeby wartość była 0 -> nazwa int NOT NULL;
 
