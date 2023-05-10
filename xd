@@ -17,31 +17,38 @@ void przepisz(struct punktn tab1[], struct punktn tab2[], int n){
 
 void wyswietl(struct punktn tab[], int n){
     for(int i = 0; i < n; i++){
-        printf("%.2f ", *(tab+i));
+        for(int j = 0; j < tab[i].w;j++){
+            printf("%.2f ", tab[i].t[j]);
+        }
     }
 }
 
 int main()
 {
+
     struct punktn p;
-    p.w = 1;
+    p.w = 2;
     p.t = malloc(p.w*sizeof(double));
     struct punktn p2;
-    p2.w = 1;
+    p2.w = 2;
     p2.t = malloc(p2.w*sizeof(double));
     struct punktn tab[] = {p,p2};
-    p2.t[0] = 2;
-    p2.t[0] = 5;
+    p.t[0] = 2;
+    p.t[1] = 5;
+    p2.t[0] = 3;
+    p2.t[1] = 4;
+
     struct punktn p3;
-    p3.w = 1;
+    p3.w = 2;
     p3.t = malloc(p3.w*sizeof(double));
     struct punktn p4;
-    p4.w = 1;
+    p4.w = 2;
     p4.t = malloc(p4.w*sizeof(double));
     struct punktn tab2[] = {p3,p4};
 
 
+
     przepisz(tab,tab2,2);
-    wyswietl(tab2, 1);
+    wyswietl(tab2, 2);
     return 0;
 }
